@@ -23,13 +23,13 @@ def home(request):
 	license3 = []
 	license4 = []
 	List = set()
-
 	today = datetime.now(timezone.utc)
 	#returns day of the week
 	weekday = today.weekday() 
 	for x in license:
 		code = 0
 		dif = x.expiration_datetime - today
+		# print(dif)
 		if(dif.days == 120):
 			code = 120
 		if(dif.days < 30 and weekday == 0 and dif.days > 0):
@@ -46,7 +46,8 @@ def home(request):
 			license3.append(x)
 			license4.append(x)
 
-		List.add(x.client.id)
+		if(code == 120 or code == 30 or code == 7):
+			List.add(x.client.id)
 
 	# send email
 	template_name_mail = 'email.html'
@@ -82,10 +83,6 @@ def home(request):
 		cont = cont + 1
 		EmailNotification(subject,template_name_mail,body,[body["mail"]])
 
-	# print(render(request,"email.html"))
-	# mail.send_notification(List)
-	print(type(context_mail))
-	print(type(package))
 	template_name = 'base.html'
 	context = {}
 	if request.method == 'POST':
