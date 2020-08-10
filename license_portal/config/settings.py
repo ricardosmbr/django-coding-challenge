@@ -134,11 +134,3 @@ STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-
-
-# DEFAULT_FROM_EMAIL = 'Nome <ricardo@servipec.com.br>'
-# EMAIL_USE_LTS = True
-# EMAIL_HOST = 'sh1.spolucloud.com'
-# EMAIL_HOST_USER = 'ricardo@servipec.com.br'
-# EMAIL_HOST_PASSWORD = 'ricardo2402'
-# EMAIL_PORT = 587
