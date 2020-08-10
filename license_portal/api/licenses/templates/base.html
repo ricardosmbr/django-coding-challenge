@@ -1,0 +1,168 @@
+<!doctype html>
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de controle de Curriculo" />
+    <title>Licenses Control</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>                                                  
+  <div class="p-3 mb-2 bg-info text-white">
+    <div class="row  alert alert-primary">
+      <div class="col-3 "></div>
+      <div class="col text-center">
+        <h2>Licenses Control</h2>
+ 
+      </div>
+      <div class="col-3" >
+         {% if user.is_authenticated %}
+         <div class="row">
+          Bem vindo, <br>{{ user }} 
+        </div>
+         {% else %}
+
+         {% endif %}   
+      </div>
+    </div>
+  </div>
+  <div class="row col-md-12 ">
+            {% if messages %}
+                {% for message in messages %}
+            <div class="col text-center text-success">
+                <h5>{{message}}</h5>
+            </div>
+                {% endfor %}
+            {% endif %}
+    <div class="row col-sm-1">
+    </div>
+    <div class="row col-sm-11">
+ {% if license %}
+      <table class="table text-center ">
+        <thead class="thead-light">
+          <th >Client</th>
+          <th >Package</th>
+          <th >License type</th>
+          <th >Created</th>
+          <th >Expiration date</th>
+        </thead>
+      </table>   
+        <div class="col text-center alert-success">
+          <h2>Expire in exactly 4 months</h2>
+        </div> 
+      <table class="table text-center ">
+   
+            {% for con in license1 %}
+        <thead>           
+            <th>{{ con.client }}</th>
+              {% for key,value in package.items %}
+                  {% if key ==  con.package %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+              {% for key,value in licenseType.items %}
+                  {% if key ==  con.license_type %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+            <th>{{ con.created_datetime }}</th>
+            <th>{{ con.expiration_datetime }}</th>
+         </thead>          
+          {% endfor %}
+      </table>   
+      <table class="table text-center ">
+        <div class="col text-center alert-warning">
+          <h2>Expire within a month and today is monday</h2>
+        </div>    
+            {% for con in license2 %}
+        <thead>           
+            <th>{{ con.client }}</th>
+              {% for key,value in package.items %}
+                  {% if key ==  con.package %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+              {% for key,value in licenseType.items %}
+                  {% if key ==  con.license_type %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+            <th>{{ con.created_datetime }}</th>
+            <th>{{ con.expiration_datetime }}</th>
+         </thead>          
+          {% endfor %}
+      </table>   
+      <table class="table text-center ">
+        <div class="col text-center alert-danger">
+          <h2>Expire within a week</h2>
+        </div>    
+            {% for con in license3 %}
+        <thead>           
+            <th>{{ con.client }}</th>
+              {% for key,value in package.items %}
+                  {% if key ==  con.package %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+              {% for key,value in licenseType.items %}
+                  {% if key ==  con.license_type %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+            <th>{{ con.created_datetime }}</th>
+            <th>{{ con.expiration_datetime }}</th>
+         </thead>  
+          {% endfor %}
+      </table> 
+      <table class="table text-center ">
+        <div class="col text-center alert-primary">
+          <h2>All of the above</h2>
+        </div>    
+            {% for con in license %}
+        <thead>           
+            <th>{{ con.client }}</th>
+              {% for key,value in package.items %}
+                  {% if key ==  con.package %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+              {% for key,value in licenseType.items %}
+                  {% if key ==  con.license_type %}
+                  <th>{{ value }}</th>
+                  {% endif %}
+               {% endfor %}
+            <th>{{ con.created_datetime }}</th>
+            <th>{{ con.expiration_datetime }}</th>
+         </thead>         
+          {% endfor %}
+      </table>
+  {% else %} 
+        <table class="table text-center ">
+        <thead class="thead-light">
+          <th >Client</th>
+          <th >Package</th>
+          <th >License type</th>
+          <th >Created</th>
+          <th >Expiration date</th>
+        </thead>
+        <thead> 
+           <th >None</th>
+          <th >None</th>
+          <th >None</th>
+          <th >None</th>
+          <th >None</th>
+        </thead>
+      </table>
+ {% endif %} 
+    </div>
+        {% block content %}
+
+        {% endblock %}
+     
+  </div>
+    <div class="footer">
+
+    </div>
+</body>
+</html>

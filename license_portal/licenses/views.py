@@ -31,27 +31,23 @@ def home(request):
 	for x in license:
 		code = 0
 		dif = x.expiration_datetime - today
+		print(dif)
 		"""for exactly four months"""
 		if(dif.days == 120):
 			code = 120
-		"""for within a month and today is monday"""
-		if(dif.days < 30 and weekday == 0 and dif.days > 0):
-			code = 30
-		"""for within a week"""
-		if(dif.days < 7 and dif.days > 0):
-			code = 7
-		if(code == 120):
 			license1.append(x)
-			license4.append(x)
-		if(code == 30):
+		"""for within a month and today is monday"""
+		if(dif.days < 30 and weekday == 0 and dif.days >= 0):
+			code = 30
 			license2.append(x)
-			license4.append(x)
-		if(code == 7):
+		"""for within a week"""
+		if(dif.days < 7 and dif.days >= 0):
+			code = 7
 			license3.append(x)
-			license4.append(x)
 
 		if(code == 120 or code == 30 or code == 7):
 			List.add(x.client.id)
+			license4.append(x)
 
 	"""send email"""
 	template_name_mail = 'email.html'

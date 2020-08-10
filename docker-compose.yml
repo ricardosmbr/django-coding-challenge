@@ -9,13 +9,20 @@ services:
      POSTGRES_PASSWORD: 'licenses'
      POSTGRES_DB: 'licenses'
 
-  license-server:
+  license-api:
     build:
-      context: ./license_portal
+      context: ./license_portal/api
     links:
       - postgres
     volumes:
-      - ./license_portal:/app
+      - ./license_portal/api:/appi
+    command: python manage.py runserver 0.0.0.0:8081
+    volumes:
+      - ./license_portal/api:/appi
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
 
   license-server:
     build:
