@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 # Create your views here.
 def home(request):
 
+	"""A Package accessible to a client with a valid license"""	
 	package = {
 		0:'javascript_sdk',
 		1:'ios_sdk',
@@ -16,7 +17,7 @@ def home(request):
 		0:'production',
 		1:'evaluation'
 	}
-
+	"""All licenses for research"""
 	license = License.objects.all()
 	license1 = []
 	license2 = []
@@ -24,16 +25,19 @@ def home(request):
 	license4 = []
 	List = set()
 	today = datetime.now(timezone.utc)
-	#returns day of the week
+	"""returns day of the week"""
 	weekday = today.weekday() 
+
 	for x in license:
 		code = 0
 		dif = x.expiration_datetime - today
-		# print(dif)
+		"""for exactly four months"""
 		if(dif.days == 120):
 			code = 120
+		"""for within a month and today is monday"""
 		if(dif.days < 30 and weekday == 0 and dif.days > 0):
 			code = 30
+		"""for within a week"""
 		if(dif.days < 7 and dif.days > 0):
 			code = 7
 		if(code == 120):
@@ -49,11 +53,11 @@ def home(request):
 		if(code == 120 or code == 30 or code == 7):
 			List.add(x.client.id)
 
-	# send email
+	"""send email"""
 	template_name_mail = 'email.html'
 	subject = 'about licenses'
 	for i in List:
-		body = {}
+		body = {} 
 		context_mail = {}
 		text = ""
 		cont = 0
@@ -64,7 +68,6 @@ def home(request):
 				body["cli_name"] = f.client.client_name
 				body["mail"] = f.client.poc_contact_email
 				context_mail[cont] = text
-	
 		for f in license2:
 			if(i == f.client.id):
 				text = text+"id: "+str(f.client.id)+" type: "+licenseType[f.license_type]+" package name: "+package[f.package]
@@ -85,6 +88,7 @@ def home(request):
 
 	template_name = 'base.html'
 	context = {}
+	"""For when an order is a POST"""
 	if request.method == 'POST':
 		context = {
 			'license':license4,
